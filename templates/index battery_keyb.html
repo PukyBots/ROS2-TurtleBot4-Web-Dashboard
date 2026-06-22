@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TurtleBot4 Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>TurtleBot4 Dashboard</h1>
+
+    <div class="status-card">
+        <h2>Battery Status</h2>
+        <div id="battery">Loading...</div>
+    </div>
+
+    <div class="control-card">
+
+        <h2>Teleoperation</h2>
+
+        <button class="move-btn"
+            onmousedown="startMove('forward')"
+            onmouseup="stopMove()"
+            onmouseleave="stopMove()">
+            ↑
+        </button>
+
+        <br>
+
+        <button class="move-btn"
+            onmousedown="startMove('left')"
+            onmouseup="stopMove()"
+            onmouseleave="stopMove()">
+            ←
+        </button>
+
+        <button class="stop-btn"
+            onclick="stopMove()">
+            STOP
+        </button>
+
+        <button class="move-btn"
+            onmousedown="startMove('right')"
+            onmouseup="stopMove()"
+            onmouseleave="stopMove()">
+            →
+        </button>
+
+        <br>
+
+        <button class="move-btn"
+            onmousedown="startMove('backward')"
+            onmouseup="stopMove()"
+            onmouseleave="stopMove()">
+            ↓
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+let movementInterval = null;
+
+function startMove(direction) {
+
+    stopMove();
+
+    fetch('/' + direction);
+
+    movementInterval = setInterval(() => {
+        fetch('/' + direction);
+    }, 100);
+}
+
+function stopMove() {
+
+    if (movementInterval) {
+        clearInterval(movementInterval);
+        movementInterval = null;
+    }
+
+    fetch('/stop');
+}
+
+function updateBattery() {
+
+    fetch('/battery')
+        .then(response => response.json())
+        .then(data => {
+
+            const value = data.battery.toFixed(1);
+
+            document.getElementById("battery").innerHTML =
+                value + "%";
+
+        });
+}
+
+setInterval(updateBattery, 1000);
+
+updateBattery();
+
+document.addEventListener('keydown', function(e){
+
+    if(e.repeat) return;
+
+    if(e.key === 'w') startMove('forward');
+    if(e.key === 's') startMove('backward');
+    if(e.key === 'a') startMove('left');
+    if(e.key === 'd') startMove('right');
+    if(e.key === ' ') stopMove();
+});
+
+document.addEventListener('keyup', function(e){
+
+    if(
+        e.key === 'w' ||
+        e.key === 'a' ||
+        e.key === 's' ||
+        e.key === 'd'
+    ){
+        stopMove();
+    }
+});
+
+</script>
+
+</body>
+</html>

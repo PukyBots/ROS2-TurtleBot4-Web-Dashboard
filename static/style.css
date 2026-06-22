@@ -1,0 +1,178 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 25px;
+}
+
+/* Cards */
+
+.status-card,
+.control-card,
+.action-card {
+
+    background: white;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Battery Section */
+
+.status-card {
+    background: #dbeafe;
+}
+
+.status-card h2 {
+    color: #1e40af;
+}
+
+#battery {
+
+    font-size: 42px;
+
+    font-weight: bold;
+
+    color: #15803d;
+
+    margin-top: 10px;
+}
+
+/* Teleop Section */
+
+.control-card {
+    background: #f3f4f6;
+}
+
+.control-card h2 {
+    color: #111827;
+}
+
+.move-btn {
+
+    width: 100px;
+
+    height: 100px;
+
+    margin: 10px;
+
+    font-size: 42px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.move-btn:hover {
+    transform: scale(1.05);
+}
+
+.stop-btn {
+
+    width: 120px;
+
+    height: 100px;
+
+    margin: 10px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #dc2626;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.stop-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Docking Section */
+
+.action-card {
+    background: #fef3c7;
+}
+
+.action-card h2 {
+    color: #92400e;
+}
+
+.dock-btn {
+
+    width: 180px;
+
+    height: 70px;
+
+    margin: 10px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    background: #16a34a;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.undock-btn {
+
+    width: 180px;
+
+    height: 70px;
+
+    margin: 10px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    background: #ea580c;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.dock-btn:hover,
+.undock-btn:hover {
+    transform: scale(1.05);
+}
