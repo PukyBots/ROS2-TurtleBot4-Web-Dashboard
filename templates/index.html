@@ -6,71 +6,89 @@
 </head>
 <body>
 
-<div class="container">
+<div class="dashboard">
 
-    <h1>TurtleBot4 Dashboard</h1>
-
-    <div class="status-card">
-        <h2>Battery Status</h2>
-        <div id="battery">Loading...</div>
+    <div class="header">
+        <h1>TurtleBot4 Dashboard</h1>
     </div>
 
-    <div class="control-card">
+    <div class="sidebar">
 
-        <h2>Teleoperation</h2>
+        <div class="battery-card">
+            <h3>Battery</h3>
+            <div id="battery">0%</div>
+        </div>
 
-        <button class="move-btn"
-            onmousedown="startMove('forward')"
-            onmouseup="stopMove()"
-            onmouseleave="stopMove()">
-            ↑
-        </button>
+        <div class="dock-card">
+            <button class="dock-btn" onclick="fetch('/dock')">
+                Dock
+            </button>
 
-        <br>
+            <button class="undock-btn" onclick="fetch('/undock')">
+                Undock
+            </button>
+        </div>
 
-        <button class="move-btn"
-            onmousedown="startMove('left')"
-            onmouseup="stopMove()"
-            onmouseleave="stopMove()">
-            ←
-        </button>
+        <div class="mapping-card">
 
-        <button class="stop-btn"
-            onclick="stopMove()">
-            STOP
-        </button>
+            <button class="map-btn"
+                onclick="fetch('/start_mapping')">
+                Start Mapping
+            </button>
 
-        <button class="move-btn"
-            onmousedown="startMove('right')"
-            onmouseup="stopMove()"
-            onmouseleave="stopMove()">
-            →
-        </button>
+            <button class="save-btn"
+                onclick="fetch('/save_map')">
+                Save Map
+            </button>
 
-        <br>
+        </div>
 
-        <button class="move-btn"
-            onmousedown="startMove('backward')"
-            onmouseup="stopMove()"
-            onmouseleave="stopMove()">
-            ↓
-        </button>
+        <div class="teleop-card">
 
-        <div class="action-card">
+            <button class="move-btn"
+                onmousedown="startMove('forward')"
+                onmouseup="stopMove()">
+                ↑
+            </button>
 
-    <h2>Docking Controls</h2>
+            <div class="middle-row">
 
-    <button class="dock-btn"
-        onclick="fetch('/dock')">
-        Dock
-    </button>
+                <button class="move-btn"
+                    onmousedown="startMove('left')"
+                    onmouseup="stopMove()">
+                    ←
+                </button>
 
-    <button class="undock-btn"
-        onclick="fetch('/undock')">
-        Undock
-    </button>
+                <button class="stop-btn"
+                    onclick="stopMove()">
+                    STOP
+                </button>
 
-</div>
+                <button class="move-btn"
+                    onmousedown="startMove('right')"
+                    onmouseup="stopMove()">
+                    →
+                </button>
+
+            </div>
+
+            <button class="move-btn"
+                onmousedown="startMove('backward')"
+                onmouseup="stopMove()">
+                ↓
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="map-section">
+
+        <h2>Live Map</h2>
+
+        <img
+            id="liveMap"
+            src="/map_image">
 
     </div>
 
@@ -114,6 +132,13 @@ function updateBattery() {
 
         });
 }
+
+setInterval(() => {
+
+    document.getElementById("liveMap").src =
+        "/map_image?t=" + Date.now();
+
+}, 1000);
 
 setInterval(updateBattery, 1000);
 

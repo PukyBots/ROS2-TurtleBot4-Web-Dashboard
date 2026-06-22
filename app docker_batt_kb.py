@@ -6,7 +6,6 @@ from rclpy.qos import ReliabilityPolicy
 from rclpy.qos import DurabilityPolicy
 from rclpy.qos import HistoryPolicy
 import threading
-from rclpy.qos import qos_profile_sensor_data
 
 import rclpy
 from rclpy.node import Node
@@ -15,14 +14,6 @@ from rclpy.action import ActionClient
 
 from irobot_create_msgs.action import Dock
 from irobot_create_msgs.action import Undock
-import subprocess
-import signal
-from nav_msgs.msg import OccupancyGrid
-from flask import send_file
-import numpy as np
-from PIL import Image
-import io
-
 
 
 app = Flask(__name__)
@@ -67,22 +58,6 @@ class WebTeleop(Node):
             '/undock'
         )
 
-        map_qos = QoSProfile(
-            reliability=ReliabilityPolicy.RELIABLE,
-            durability=DurabilityPolicy.TRANSIENT_LOCAL,
-            history=HistoryPolicy.KEEP_LAST,
-            depth=1
-        )
-        
-        self.map_data = None
-
-        self.create_subscription(
-            OccupancyGrid,
-            '/map',
-            self.map_callback,
-            map_qos
-        )
-
 
     def battery_callback(self, msg):
 
@@ -105,10 +80,7 @@ class WebTeleop(Node):
 
         print("Undock command sent")
 
-    def map_callback(self,msg):
-
-        self.map_data = msg
-
+        
     def send_cmd(self, linear, angular):
 
         msg = Twist()
@@ -191,78 +163,5 @@ def undock():
     return "ok"
 
 
-slam_process = None
-@app.route('/start_mapping')
-def start_mapping():
-
-    global slam_process
-
-    if slam_process is None or slam_process.poll() is not None:
-
-        slam_process = subprocess.Popen(
-            """
-            source /opt/ros/humble/setup.bash
-            ros2 launch turtlebot4_navigation slam.launch.py
-            """,
-            shell=True,
-            executable="/bin/bash"
-        )
-
-    return "Mapping Started"
-
-
-@app.route('/save_map')
-def save_map():
-
-    subprocess.Popen([
-        "ros2",
-        "service",
-        "call",
-        "/slam_toolbox/save_map",
-        "slam_toolbox/srv/SaveMap",
-        "{name: {data: '/home/pg/web_control/maps/web_map'}}"
-    ])
-
-    return "Map Saved"
-
-@app.route('/map_image')
-def map_image():
-
-    if teleop.map_data is None:
-        return "No map yet", 404
-
-    msg = teleop.map_data
-
-    width = msg.info.width
-    height = msg.info.height
-
-    data = np.array(msg.data, dtype=np.int16)
-
-    img = np.zeros_like(data, dtype=np.uint8)
-
-    img[data == -1] = 127
-    img[data == 0] = 255
-    img[data > 50] = 0
-
-    img = img.reshape((height, width))
-
-    img = np.flipud(img)
-
-    image = Image.fromarray(img)
-
-    buffer = io.BytesIO()
-
-    image.save(buffer, format="PNG")
-
-    buffer.seek(0)
-
-    return send_file(
-        buffer,
-        mimetype="image/png"
-    )
-
-try:
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
-finally:
-    teleop.destroy_node()
-    rclpy.shutdown()

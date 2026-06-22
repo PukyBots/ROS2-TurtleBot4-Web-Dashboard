@@ -4,6 +4,17 @@ A lightweight web-based control dashboard for **TurtleBot4** built using **Flask
 
 The dashboard allows remote robot control from any device on the same network through a browser, without requiring direct terminal access.
 
+<div align="center">
+<img src="images/web.png" width="400">
+</div>
+
+<br></br>
+
+<div align="center">
+<img src="images/tb4.jpeg" width="400">
+</div>
+
+
 ---
 
 ## Features
@@ -156,6 +167,147 @@ You should see topics such as:
 /odom
 /scan
 ```
+
+---
+
+## Setup Instructions
+
+### 1. Install Required ROS2 Packages on the Laptop
+
+Update packages:
+
+```bash
+sudo apt update
+```
+
+Install TurtleBot4 desktop packages:
+
+```bash
+sudo apt install ros-humble-turtlebot4-desktop
+```
+
+Install teleoperation package:
+
+```bash
+sudo apt install ros-humble-teleop-twist-keyboard
+```
+
+Install navigation packages:
+
+```bash
+sudo apt install ros-humble-turtlebot4-navigation
+```
+
+---
+
+### 2. Connect to TurtleBot4
+
+Find the TurtleBot4 IP address:
+
+```bash
+arp -a
+```
+
+Example:
+
+```text
+192.168.254.115
+```
+
+SSH into the robot:
+
+```bash
+ssh ubuntu@192.168.254.115
+```
+
+Default username:
+
+```text
+ubuntu
+```
+
+---
+
+### 3. Configure TurtleBot4 Network
+
+Run the TurtleBot4 setup utility:
+
+```bash
+turtlebot4-setup
+```
+
+Configure the TurtleBot4 to connect to the **same Wi-Fi network** as the laptop.
+
+Both devices must be connected to the same network for ROS2 communication.
+
+---
+
+### 4. Verify ROS2 Communication Settings
+
+Ensure both the laptop and TurtleBot4 use the same:
+
+#### ROS Domain ID
+
+Check:
+
+```bash
+echo $ROS_DOMAIN_ID
+```
+
+Example:
+
+```bash
+export ROS_DOMAIN_ID=0
+```
+
+The value must match on both systems.
+
+---
+
+#### DDS Implementation
+
+Check:
+
+```bash
+echo $RMW_IMPLEMENTATION
+```
+
+Recommended:
+
+```text
+rmw_fastrtps_cpp
+```
+
+Set if required:
+
+```bash
+export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+```
+
+The DDS implementation must match on both the laptop and TurtleBot4.
+
+---
+
+### 5. Verify ROS2 Connectivity
+
+On the laptop:
+
+```bash
+ros2 topic list
+```
+
+You should see TurtleBot4 topics such as:
+
+```text
+/battery_state
+/odom
+/cmd_vel
+/scan
+/tf
+/tf_static
+```
+
+If these topics are visible, the laptop is successfully communicating with the TurtleBot4.
 
 ---
 

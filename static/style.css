@@ -1,178 +1,159 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #eef2f7;
-    margin: 0;
-    padding: 20px;
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f5f7fa;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
+.dashboard{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    grid-template-rows:70px calc(100vh - 70px);
+    height:100vh;
 }
 
-h1 {
-    text-align: center;
-    color: #1f2937;
-    margin-bottom: 25px;
+.header{
+    grid-column:1 / span 2;
+    background:#1e293b;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* Cards */
-
-.status-card,
-.control-card,
-.action-card {
-
-    background: white;
-
-    border-radius: 15px;
-
-    padding: 20px;
-
-    margin-bottom: 20px;
-
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+.header h1{
+    margin:0;
 }
 
-/* Battery Section */
+.sidebar{
+    background:white;
+    padding:20px;
 
-.status-card {
-    background: #dbeafe;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
 }
 
-.status-card h2 {
-    color: #1e40af;
+.battery-card{
+    background:#22c55e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    border-radius:12px;
 }
 
-#battery {
-
-    font-size: 42px;
-
-    font-weight: bold;
-
-    color: #15803d;
-
-    margin-top: 10px;
+.battery-card h3{
+    margin:0;
+    font-size:20px;
 }
 
-/* Teleop Section */
-
-.control-card {
-    background: #f3f4f6;
+#battery{
+    margin-top:10px;
+    font-size:3rem;
+    font-weight:bold;
 }
 
-.control-card h2 {
-    color: #111827;
+.dock-card,
+.mapping-card{
+    display:flex;
+    gap:12px;
 }
 
-.move-btn {
-
-    width: 100px;
-
-    height: 100px;
-
-    margin: 10px;
-
-    font-size: 42px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #2563eb;
-
-    color: white;
-
-    cursor: pointer;
+.dock-btn,
+.undock-btn,
+.map-btn,
+.save-btn{
+    flex:1;
+    height:65px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.move-btn:hover {
-    transform: scale(1.05);
+.dock-btn{
+    background:#3b82f6;
+    color:white;
 }
 
-.stop-btn {
-
-    width: 120px;
-
-    height: 100px;
-
-    margin: 10px;
-
-    font-size: 24px;
-
-    font-weight: bold;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #dc2626;
-
-    color: white;
-
-    cursor: pointer;
+.undock-btn{
+    background:#6366f1;
+    color:white;
 }
 
-.stop-btn:hover {
-    transform: scale(1.05);
+.map-btn{
+    background:#10b981;
+    color:white;
 }
 
-/* Docking Section */
-
-.action-card {
-    background: #fef3c7;
+.save-btn{
+    background:#f59e0b;
+    color:white;
 }
 
-.action-card h2 {
-    color: #92400e;
+.teleop-card{
+    margin-top:10px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
 }
 
-.dock-btn {
-
-    width: 180px;
-
-    height: 70px;
-
-    margin: 10px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    background: #16a34a;
-
-    color: white;
-
-    cursor: pointer;
+.middle-row{
+    display:flex;
+    gap:12px;
 }
 
-.undock-btn {
+.move-btn{
+    width:110px;
+    height:110px;
 
-    width: 180px;
+    font-size:42px;
+    border:none;
+    border-radius:12px;
 
-    height: 70px;
+    background:#2563eb;
+    color:white;
 
-    margin: 10px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    background: #ea580c;
-
-    color: white;
-
-    cursor: pointer;
+    cursor:pointer;
 }
 
-.dock-btn:hover,
-.undock-btn:hover {
-    transform: scale(1.05);
+.stop-btn{
+    width:120px;
+    height:110px;
+
+    background:#ef4444;
+    color:white;
+
+    border:none;
+    border-radius:12px;
+
+    font-size:18px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.map-section{
+    padding:15px;
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.map-section h2{
+    margin-top:0;
+}
+
+#liveMap{
+    width:100%;
+    height:75vh;
+
+    object-fit:contain;
+
+    border:2px solid #ccc;
+    border-radius:10px;
+    background:white;
 }
