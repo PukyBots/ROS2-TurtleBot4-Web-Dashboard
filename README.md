@@ -31,7 +31,7 @@ Supports:
 - Continuous movement while holding buttons
 
 <div align="center">
-<img src="images/web.png" width="400">
+<img src="images/web.png" width="700" height="500">
 </div>
 
 
