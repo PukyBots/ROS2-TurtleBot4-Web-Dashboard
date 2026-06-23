@@ -6,7 +6,7 @@ body{
 
 .dashboard{
     display:grid;
-    grid-template-columns:380px 1fr;
+    grid-template-columns:50% 50%;
     grid-template-rows:70px calc(100vh - 70px);
     height:100vh;
 }
@@ -20,17 +20,13 @@ body{
     justify-content:center;
 }
 
-.header h1{
-    margin:0;
-}
-
 .sidebar{
     background:white;
     padding:20px;
 
     display:flex;
     flex-direction:column;
-    gap:20px;
+    justify-content:space-between;
 }
 
 .battery-card{
@@ -41,13 +37,7 @@ body{
     border-radius:12px;
 }
 
-.battery-card h3{
-    margin:0;
-    font-size:20px;
-}
-
 #battery{
-    margin-top:10px;
     font-size:3rem;
     font-weight:bold;
 }
@@ -55,7 +45,7 @@ body{
 .dock-card,
 .mapping-card{
     display:flex;
-    gap:12px;
+    gap:15px;
 }
 
 .dock-btn,
@@ -63,73 +53,79 @@ body{
 .map-btn,
 .save-btn{
     flex:1;
-    height:65px;
+
+    height:90px;
+
     border:none;
-    border-radius:10px;
-    font-size:18px;
+    border-radius:15px;
+
+    font-size:24px;
     font-weight:bold;
+
     cursor:pointer;
+
+    transition:0.2s;
 }
 
 .dock-btn{
-    background:#3b82f6;
+    background:#2563eb;
     color:white;
 }
 
 .undock-btn{
-    background:#6366f1;
+    background:#7c3aed;
     color:white;
 }
 
 .map-btn{
-    background:#10b981;
+    background:#16a34a;
     color:white;
 }
 
 .save-btn{
-    background:#f59e0b;
+    background:#ea580c;
     color:white;
 }
 
 .teleop-card{
-    margin-top:10px;
-
     display:flex;
     flex-direction:column;
     align-items:center;
-    gap:12px;
+    gap:20px;
 }
 
 .middle-row{
     display:flex;
-    gap:12px;
+    gap:20px;
 }
 
 .move-btn{
-    width:110px;
-    height:110px;
+    width:140px;
+    height:140px;
 
-    font-size:42px;
     border:none;
-    border-radius:12px;
+    border-radius:15px;
 
     background:#2563eb;
     color:white;
+
+    font-size:60px;
+    font-weight:bold;
 
     cursor:pointer;
 }
 
 .stop-btn{
-    width:120px;
-    height:110px;
+    width:160px;
+    height:140px;
+
+    border:none;
+    border-radius:15px;
 
     background:#ef4444;
     color:white;
 
-    border:none;
-    border-radius:12px;
-
-    font-size:18px;
+    font-size:24px;
     font-weight:bold;
 
     cursor:pointer;
@@ -137,10 +133,11 @@ body{
 
 .map-section{
     padding:15px;
-    overflow:hidden;
 
     display:flex;
     flex-direction:column;
+
+    overflow:hidden;
 }
 
 .map-section h2{
@@ -149,11 +146,26 @@ body{
 
 #liveMap{
     width:100%;
-    height:75vh;
+    height:calc(100vh - 130px);
 
     object-fit:contain;
 
-    border:2px solid #ccc;
-    border-radius:10px;
     background:white;
+    border-radius:12px;
+    border:2px solid #ccc;
+}
+
+.nav-btn{
+    width:100%;
+    height:60px;
+    margin-bottom:10px;
+
+    font-size:20px;
+    font-weight:bold;
+
+    border:none;
+    border-radius:10px;
+
+    background:#0ea5e9;
+    color:white;
 }

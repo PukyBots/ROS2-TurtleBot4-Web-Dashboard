@@ -4,14 +4,9 @@ A lightweight web-based control dashboard for **TurtleBot4** built using **Flask
 
 The dashboard allows remote robot control from any device on the same network through a browser, without requiring direct terminal access.
 
-<div align="center">
-<img src="images/web.png" width="400">
-</div>
-
-<br></br>
 
 <div align="center">
-<img src="images/tb4.jpeg" width="400">
+<img src="images/both.gif" width="800" height="600">
 </div>
 
 
@@ -34,6 +29,11 @@ Supports:
 - Mouse control
 - Touchscreen control
 - Continuous movement while holding buttons
+
+<div align="center">
+<img src="images/web.png" width="400">
+</div>
+
 
 ### Keyboard Control
 
@@ -69,6 +69,73 @@ Provides quick access to:
 - Undock
 
 for autonomous charging operations.
+
+---
+
+# Mapping
+
+The dashboard supports **live SLAM mapping** using **slam_toolbox**.
+
+Users can:
+
+- Start mapping directly from the web interface
+- Drive the robot manually while building the map
+- View the generated occupancy grid in real time
+- Save the completed map to disk
+
+
+---
+
+# Navigation
+
+The dashboard supports autonomous navigation using Nav2.
+
+-Start Localization
+-Load a previously saved map by clicking:
+-Start Navigation
+
+The dashboard launches:
+
+ros2 launch turtlebot4_navigation localization.launch.py \
+map:=/home/user/maps/web_map.yaml
+
+This starts:
+
+-Map Server
+-AMCL Localization
+-Transform Tree
+-Start Nav2
+
+Click:
+
+## Start Nav2
+
+The dashboard launches:
+
+ros2 launch turtlebot4_navigation nav2.launch.py
+
+This starts:
+
+Planner Server
+Controller Server
+Recovery Behaviors
+Behavior Tree Navigator
+Initial Pose
+
+Before navigation can begin, the robot's position must be initialized.
+
+The dashboard publishes:
+
+/initialpose
+
+Message type:
+
+geometry_msgs/msg/PoseWithCovarianceStamped
+
+Example:
+
+X = 0.0
+Y = 0.0
 
 ---
 
@@ -118,6 +185,12 @@ TurtleBot4
 - TurtleBot4
 - Laptop/PC
 - Common Wi-Fi Network
+
+
+<div align="center">
+<img src="images/tb4.jpeg" width="400">
+</div>
+
 
 ### Software
 

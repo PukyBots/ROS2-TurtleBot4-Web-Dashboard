@@ -43,6 +43,37 @@
 
         </div>
 
+        <button class="nav-btn" onclick="fetch('/start_navigation')">
+    Start Navigation
+</button>
+
+<button class="nav-btn" onclick="fetch('/start_nav2')">
+    Start Nav2
+</button>
+
+
+  <div class="pose-card">
+
+    <h3>Initial Pose</h3>
+
+    <input id="xpose" placeholder="X coordinate">
+
+    <input id="ypose" placeholder="Y coordinate">
+
+    <button onclick="setPose()">
+        Set Pose
+    </button>
+
+</div>
+
+<div class="nav-card">
+    <h3>Saved Locations</h3>
+
+    <div id="navButtons"></div>
+</div>
+
+
+
         <div class="teleop-card">
 
             <button class="move-btn"
@@ -94,6 +125,7 @@
 
 </div>
 
+
 <script>
 
 let movementInterval = null;
@@ -138,7 +170,7 @@ setInterval(() => {
     document.getElementById("liveMap").src =
         "/map_image?t=" + Date.now();
 
-}, 1000);
+}, 500);
 
 setInterval(updateBattery, 1000);
 
@@ -166,6 +198,56 @@ document.addEventListener('keyup', function(e){
         stopMove();
     }
 });
+
+function setPose(){
+
+    let x =
+        document.getElementById("xpose").value;
+
+    let y =
+        document.getElementById("ypose").value;
+
+
+    fetch(
+    `/set_initial_pose/${encodeURIComponent(x)}/${encodeURIComponent(y)}`
+);
+}
+
+function loadLocations(){
+
+    fetch('/locations')
+    .then(r => r.json())
+    .then(data => {
+
+        let container =
+            document.getElementById("navButtons");
+
+        container.innerHTML = "";
+
+        Object.keys(data).forEach(name => {
+
+            let btn =
+                document.createElement("button");
+
+            btn.innerHTML = name;
+
+            btn.onclick = () => {
+                fetch(`/goto_location/${encodeURIComponent(name)}`);
+            };
+
+            container.appendChild(btn);
+        });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
+
+loadLocations();
+
+setInterval(loadLocations, 3000);
+
+
 
 </script>
 
